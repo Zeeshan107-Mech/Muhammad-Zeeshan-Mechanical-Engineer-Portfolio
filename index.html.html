@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Muhammad Zeeshan — Mechanical Engineering Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12233B;
+    --ink-soft:#3C516D;
+    --blueprint-deep:#0B2440;
+    --blueprint-mid:#204A72;
+    --paper:#EEF2F7;
+    --paper-line:#D7E0EA;
+    --card:#FFFFFF;
+    --brass:#C98A2E;
+    --brass-soft:#E7B463;
+    --cyan:#3FA9C9;
+    --line-w:1px;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation:none !important; transition:none !important;}
+  }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    font-size:15px;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Space Grotesk',sans-serif;
+    margin:0;
+  }
+  .mono{ font-family:'JetBrains Mono',monospace; }
+  a{ color:inherit; }
+
+  /* ---------- background grid ---------- */
+  .grid-bg{
+    background-image:
+      linear-gradient(var(--paper-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size:34px 34px;
+  }
+  .grid-bg-dark{
+    background-color:var(--blueprint-deep);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size:28px 28px;
+  }
+
+  /* ---------- dimension-line divider ---------- */
+  .dim-divider{
+    display:flex; align-items:center; gap:10px;
+    margin:0 auto; max-width:1100px; padding:0 28px;
+  }
+  .dim-divider .tick{ width:1px; height:10px; background:var(--ink-soft); }
+  .dim-divider .rule{ flex:1; height:1px; background:var(--ink-soft); position:relative; }
+  .dim-divider .rule::before, .dim-divider .rule::after{
+    content:""; position:absolute; top:-3px; width:0; height:0;
+    border-top:3px solid transparent; border-bottom:3px solid transparent;
+  }
+  .dim-divider .rule::before{ left:0; border-right:6px solid var(--ink-soft); }
+  .dim-divider .rule::after{ right:0; border-left:6px solid var(--ink-soft); }
+  .dim-divider .label{
+    font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.12em;
+    color:var(--ink-soft); white-space:nowrap; text-transform:uppercase;
+  }
+
+  /* ---------- nav ---------- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(238,242,247,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--paper-line);
+  }
+  .nav-inner{
+    max-width:1100px; margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  .nav-mark{ font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.1em; color:var(--ink-soft); }
+  .nav-links{ display:flex; gap:22px; flex-wrap:wrap; }
+  .nav-links a{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.06em;
+    text-decoration:none; color:var(--ink-soft); text-transform:uppercase;
+    padding-bottom:4px; border-bottom:2px solid transparent;
+    transition:color .18s ease, border-color .18s ease;
+  }
+  .nav-links a:hover, .nav-links a.active{ color:var(--ink); border-color:var(--brass); }
+
+  /* ---------- hero ---------- */
+  .hero{ color:#EAF1F8; padding:70px 28px 40px; position:relative; overflow:hidden; }
+  .hero-inner{ max-width:1100px; margin:0 auto; }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.18em;
+    color:var(--brass-soft); text-transform:uppercase; margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(38px,7vw,66px); font-weight:700; letter-spacing:-0.01em;
+    color:#F5F9FC; margin-bottom:10px;
+  }
+  .hero .role{ font-size:18px; color:#B9CBDD; margin-bottom:34px; }
+  .titleblock{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(120px,1fr));
+    border:1px solid rgba(255,255,255,0.28);
+    max-width:720px;
+  }
+  .titleblock div{
+    padding:10px 14px; border-right:1px solid rgba(255,255,255,0.28); border-top:1px solid rgba(255,255,255,0.28);
+  }
+  .titleblock div:nth-child(4n){ border-right:none; }
+  .titleblock div:nth-child(-n+4){ border-top:none; }
+  .titleblock .k{ font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em; color:#8FAFCB; text-transform:uppercase; margin-bottom:4px; }
+  .titleblock .v{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:#F0F5FA; word-break:break-word; }
+
+  /* ---------- sections ---------- */
+  section{ max-width:1100px; margin:0 auto; padding:56px 28px; }
+  .section-head{ margin-bottom:28px; }
+  .section-head .num{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass); letter-spacing:.1em; }
+  .section-head h2{ font-size:28px; margin-top:6px; }
+  .lede{ color:var(--ink-soft); max-width:70ch; }
+
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .55s ease, transform .55s ease; }
+  .reveal.visible{ opacity:1; transform:none; }
+
+  /* ---------- about ---------- */
+  .about-grid{ display:grid; grid-template-columns:1.4fr 1fr; gap:40px; align-items:start; }
+  @media (max-width:760px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-fact{ display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--paper-line); font-size:13.5px; }
+  .about-fact span:first-child{ color:var(--ink-soft); font-family:'JetBrains Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; }
+
+  /* ---------- cards ---------- */
+  .card{
+    background:var(--card); border:1px solid var(--paper-line); border-radius:var(--radius);
+    padding:22px 24px; position:relative;
+  }
+  .card + .card{ margin-top:16px; }
+  .card .top{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:6px; }
+  .card h3{ font-size:17px; }
+  .card .org{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft); }
+  .card .when{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass); white-space:nowrap; }
+  .card ul{ margin:10px 0 0; padding-left:18px; }
+  .card li{ margin-bottom:6px; }
+  .card li::marker{ color:var(--brass); }
+
+  /* ---------- featured project ---------- */
+  .feature{
+    display:grid; grid-template-columns:1fr 1fr; gap:0;
+    border:1px solid var(--paper-line); background:var(--card);
+  }
+  @media (max-width:760px){ .feature{ grid-template-columns:1fr; } }
+  .feature .art{
+    background:var(--blueprint-deep); position:relative; min-height:260px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .feature .copy{ padding:30px 30px; }
+  .feature .copy .tag{ font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--brass); letter-spacing:.1em; text-transform:uppercase; }
+  .feature .copy h3{ font-size:22px; margin:8px 0 4px; }
+  .feature .copy .sup{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft); margin-bottom:14px; }
+  .feature .copy p.obj{ font-style:italic; color:var(--ink-soft); border-left:2px solid var(--brass); padding-left:12px; margin:14px 0; }
+  .feature .copy ul{ padding-left:18px; margin:14px 0; }
+  .feature .copy li{ margin-bottom:7px; }
+  .feature .tools{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft); margin-top:12px; }
+
+  /* ---------- filter chips ---------- */
+  .chips{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px; }
+  .chip{
+    font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:.05em;
+    padding:7px 13px; border:1px solid var(--paper-line); background:var(--card);
+    cursor:pointer; color:var(--ink-soft); text-transform:uppercase; user-select:none;
+    transition:all .15s ease;
+  }
+  .chip:hover{ border-color:var(--brass-soft); color:var(--ink); }
+  .chip.active{ background:var(--ink); color:#EEF2F7; border-color:var(--ink); }
+
+  /* ---------- revision table ---------- */
+  .rev-table{ border:1px solid var(--paper-line); background:var(--card); }
+  .rev-row{ border-bottom:1px solid var(--paper-line); }
+  .rev-row:last-child{ border-bottom:none; }
+  .rev-row-head{
+    display:grid; grid-template-columns:70px 1fr 150px 24px;
+    gap:14px; align-items:center; padding:14px 18px; cursor:pointer;
+  }
+  @media (max-width:640px){ .rev-row-head{ grid-template-columns:50px 1fr 20px; } .rev-sem{ display:none; } }
+  .rev-row-head:hover{ background:#F7FAFD; }
+  .rev-id{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass); }
+  .rev-title{ font-size:14.5px; font-weight:500; }
+  .rev-course{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-soft); display:block; margin-top:2px; font-weight:400; }
+  .rev-sem{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-soft); text-align:right; }
+  .chevron{ transition:transform .2s ease; color:var(--ink-soft); justify-self:end; }
+  .rev-row.open .chevron{ transform:rotate(180deg); }
+  .rev-detail{ max-height:0; overflow:hidden; transition:max-height .28s ease; }
+  .rev-row.open .rev-detail{ max-height:400px; }
+  .rev-detail-inner{ padding:0 18px 18px 102px; }
+  @media (max-width:640px){ .rev-detail-inner{ padding:0 18px 18px 18px; } }
+  .rev-detail-inner ul{ margin:0; padding-left:18px; }
+  .rev-detail-inner li{ margin-bottom:6px; color:var(--ink-soft); font-size:13.5px; }
+  .rev-detail-inner li::marker{ color:var(--brass); }
+  .rev-count{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-soft); margin-bottom:14px; }
+
+  /* ---------- BOM skills table ---------- */
+  .bom{ width:100%; border-collapse:collapse; border:1px solid var(--paper-line); background:var(--card); }
+  .bom th{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); text-align:left; padding:10px 14px; border-bottom:1px solid var(--paper-line);
+  }
+  .bom td{ padding:11px 14px; border-bottom:1px solid var(--paper-line); font-size:13.5px; vertical-align:top; }
+  .bom tr:last-child td{ border-bottom:none; }
+  .bom td.no{ font-family:'JetBrains Mono',monospace; color:var(--brass); width:34px; }
+  .bom td.cat{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-soft); width:170px; }
+
+  /* ---------- education / certs ---------- */
+  .edu-item{ display:flex; justify-content:space-between; gap:20px; padding:16px 0; border-bottom:1px solid var(--paper-line); flex-wrap:wrap; }
+  .edu-item:last-child{ border-bottom:none; }
+  .edu-item h3{ font-size:16px; }
+  .edu-item .org{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft); margin-top:2px; }
+  .edu-item .date{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brass); white-space:nowrap; }
+
+  .tag-row{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+  .tag{ font-family:'JetBrains Mono',monospace; font-size:11.5px; padding:5px 10px; background:var(--card); border:1px solid var(--paper-line); color:var(--ink-soft); }
+
+  /* ---------- footer ---------- */
+  footer{ background:var(--blueprint-deep); color:#DCE7F1; padding:50px 28px 34px; }
+  .footer-inner{ max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; }
+  footer a{ color:#F0C88A; text-decoration:none; }
+  footer a:hover{ text-decoration:underline; }
+  .footer-mono{ font-family:'JetBrains Mono',monospace; font-size:12px; color:#8FAFCB; }
+
+  ::selection{ background:var(--brass-soft); color:var(--ink); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="nav-mark">MZ // MECH-ENG // REV.08</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#featured">Featured</a>
+      <a href="#log">Project Log</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero grid-bg-dark">
+  <div class="hero-inner">
+    <div class="eyebrow">Mechanical Engineering — Portfolio Sheet</div>
+    <h1>Muhammad Zeeshan</h1>
+    <div class="role">Design &amp; Analysis (SolidWorks, ANSYS) · Manufacturing &amp; Maintenance · Quality Assurance</div>
+    <div class="titleblock">
+      <div><div class="k">Location</div><div class="v">Taxila Cantt, Pakistan</div></div>
+      <div><div class="k">Email</div><div class="v">mz5019120@gmail.com</div></div>
+      <div><div class="k">Phone</div><div class="v">+92 313 4551015</div></div>
+      <div><div class="k">Profile</div><div class="v">linkedin.com/in/muhammad-zeeshan-351652233</div></div>
+      <div><div class="k">Degree</div><div class="v">BS Mechanical Eng.</div></div>
+      <div><div class="k">Institute</div><div class="v">HITEC University, Taxila</div></div>
+      <div><div class="k">Completed</div><div class="v">July 2026</div></div>
+      <div><div class="k">Sheet</div><div class="v">1 OF 1 — Rev. 8</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="dim-divider" style="margin-top:0;"><div class="tick"></div><div class="rule"></div><div class="label">Start of document</div><div class="rule"></div><div class="tick"></div></div>
+
+<section id="about" class="grid-bg">
+  <div class="section-head reveal">
+    <div class="num">§ 01</div>
+    <h2>About</h2>
+  </div>
+  <div class="about-grid">
+    <p class="lede reveal">
+      I'm a Mechanical Engineering graduate of HITEC University, Taxila (July 2026), with a project-first
+      approach to learning — across eight semesters, nearly every course I took turned into something built,
+      tested, or simulated rather than left on paper. This portfolio brings that work together: from first-year
+      workshop fundamentals through my Final Year Project upgrading a dual-extruder 3D printer, to final-semester
+      work in Industrial Engineering and Renewable Energy Systems. Alongside my academic work, I've had hands-on
+      exposure to real industrial environments through internships at Pakistan Aeronautical Complex, Kamra and
+      Pak Suzuki Motor Company. I'm currently seeking opportunities — in industry or graduate study — where I can
+      keep building things that work.
+    </p>
+    <div class="reveal">
+      <div class="about-fact"><span>Status</span><span>Open to work / MS study</span></div>
+      <div class="about-fact"><span>Based in</span><span>Taxila Cantt, Punjab, PK</span></div>
+      <div class="about-fact"><span>Core tools</span><span>SolidWorks, ANSYS</span></div>
+      <div class="about-fact"><span>Languages</span><span>Urdu (native), English</span></div>
+      <div class="about-fact"><span>Interests</span><span>Photography, N. Pakistan travel</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="dim-divider"><div class="tick"></div><div class="rule"></div><div class="label">§ 02 — Experience</div><div class="rule"></div><div class="tick"></div></div>
+
+<section id="experience" class="grid-bg">
+  <div class="section-head reveal">
+    <div class="num">§ 02</div>
+    <h2>Professional Experience</h2>
+  </div>
+  <div class="reveal">
+    <div class="card">
+      <div class="top">
+        <div><h3>Intern — Mechanical / Manufacturing</h3><div class="org">Pakistan Aeronautical Complex (PAC), Kamra</div></div>
+        <div class="when">AUG 2025 – OCT 2025</div>
+      </div>
+      <ul>
+        <li>Gained hands-on exposure to aerospace manufacturing and maintenance practices within a highly regulated, safety-critical production environment.</li>
+        <li>Built effective working relationships with engineers and technicians, contributing to a collaborative, learning-focused team environment.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="top">
+        <div><h3>Intern</h3><div class="org">Pak Suzuki Motor Company Ltd., Taxila</div></div>
+        <div class="when">DEC 2021 – MAR 2022</div>
+      </div>
+      <ul>
+        <li>Completed a structured internship within an automotive production facility, gaining exposure to manufacturing processes and plant operations.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="dim-divider"><div class="tick"></div><div class="rule"></div><div class="label">§ 03 — Featured Project</div><div class="rule"></div><div class="tick"></div></div>
+
+<section id="featured" class="grid-bg">
+  <div class="section-head reveal">
+    <div class="num">§ 03</div>
+    <h2>Featured Project</h2>
+  </div>
+  <div class="feature reveal">
+    <div class="art">
+      <svg width="220" height="220" viewBox="0 0 220 220" fill="none">
+        <rect x="30" y="30" width="160" height="160" stroke="#3FA9C9" stroke-width="1.2" stroke-dasharray="4 4" />
+        <rect x="55" y="55" width="110" height="110" stroke="#EAF1F8" stroke-width="1.4" />
+        <line x1="55" y1="55" x2="30" y2="30" stroke="#3FA9C9" stroke-width="1" />
+        <line x1="165" y1="55" x2="190" y2="30" stroke="#3FA9C9" stroke-width="1" />
+        <line x1="55" y1="165" x2="30" y2="190" stroke="#3FA9C9" stroke-width="1" />
+        <line x1="165" y1="165" x2="190" y2="190" stroke="#3FA9C9" stroke-width="1" />
+        <circle cx="80" cy="80" r="9" stroke="#E7B463" stroke-width="1.4" />
+        <circle cx="140" cy="80" r="9" stroke="#E7B463" stroke-width="1.4" />
+        <line x1="70" y1="120" x2="150" y2="120" stroke="#EAF1F8" stroke-width="1" />
+        <line x1="70" y1="140" x2="150" y2="140" stroke="#EAF1F8" stroke-width="1" />
+        <line x1="70" y1="120" x2="70" y2="140" stroke="#EAF1F8" stroke-width="1" />
+        <line x1="150" y1="120" x2="150" y2="140" stroke="#EAF1F8" stroke-width="1" />
+        <text x="110" y="205" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#8FAFCB" letter-spacing="1">DUAL-EXTRUDER FRAME — REV.3</text>
+      </svg>
+    </div>
+    <div class="copy">
+      <div class="tag">Final Year Project</div>
+      <h3>Upgradation of a Dual-Extruder 3D Printer</h3>
+      <div class="sup">HITEC University, Taxila · Supervisor: Dr. Muhammad Farhan Ausaf</div>
+      <p class="obj">Objective: improve structural rigidity, print accuracy, and functionality of an existing printer platform through a redesigned frame, upgraded extrusion system, and improved motion control.</p>
+      <ul>
+        <li>Redesigned the printer frame for improved structural rigidity and dimensional stability, validating improvements through structural and modal analysis in ANSYS.</li>
+        <li>Engineered a 2-in-1 dual-extruder upgrade and a linear rail motion system to improve print accuracy and reliability.</li>
+        <li>Integrated Klipper firmware to improve motion control and print performance.</li>
+        <li>Authored the FYP thesis, documenting design methodology and simulation results chapter by chapter.</li>
+        <li>Delivered the completed printer to HITEC University as a donated laboratory asset for ongoing student use.</li>
+      </ul>
+      <div class="tools">TOOLS — SolidWorks · ANSYS (structural &amp; modal) · Klipper firmware</div>
+    </div>
+  </div>
+</section>
+
+<div class="dim-divider"><div class="tick"></div><div class="rule"></div><div class="label">§ 04 — Project Log</div><div class="rule"></div><div class="tick"></div></div>
+
+<section id="log" class="grid-bg">
+  <div class="section-head reveal">
+    <div class="num">§ 04</div>
+    <h2>Academic Project Log</h2>
+    <p class="lede">Every semester, read like a drawing revision history. Filter by semester, click a row to expand.</p>
+  </div>
+  <div class="reveal">
+    <div class="chips" id="chips"></div>
+    <div class="rev-count" id="rev-count"></div>
+    <div class="rev-table" id="rev-table"></div>
+  </div>
+</section>
+
+<div class="dim-divider"><div class="tick"></div><div class="rule"></div><div class="label">§ 05 — Skills</div><div class="rule"></div><div class="tick"></div></div>
+
+<section id="skills" class="grid-bg">
+  <div class="section-head reveal">
+    <div class="num">§ 05</div>
+    <h2>Skills — Bill of Materials</h2>
+  </div>
+  <table class="bom reveal">
+    <thead><tr><th>No.</th><th>Item</th><th>Category</th></tr></thead>
+    <tbody>
+      <tr><td class="no">01</td><td>SolidWorks — part, assembly &amp; drawing design</td><td class="cat">Design &amp; CAD</td></tr>
+      <tr><td class="no">02</td><td>ANSYS Workbench — structural &amp; modal analysis</td><td class="cat">Design &amp; CAD</td></tr>
+      <tr><td class="no">03</td><td>CNC programming — milling &amp; lathe</td><td class="cat">Manufacturing</td></tr>
+      <tr><td class="no">04</td><td>Manufacturing processes &amp; mechanical maintenance</td><td class="cat">Manufacturing</td></tr>
+      <tr><td class="no">05</td><td>Quality assurance &amp; inspection</td><td class="cat">Quality</td></tr>
+      <tr><td class="no">06</td><td>Lean manufacturing, work measurement &amp; line balancing</td><td class="cat">Industrial Eng.</td></tr>
+      <tr><td class="no">07</td><td>Renewable energy systems — solar PV sizing</td><td class="cat">Energy</td></tr>
+      <tr><td class="no">08</td><td>Health, Safety &amp; Environment (HSE)</td><td class="cat">Safety</td></tr>
+      <tr><td class="no">09</td><td>MATLAB — numerical methods &amp; kinematic analysis</td><td class="cat">Analysis</td></tr>
+      <tr><td class="no">10</td><td>Project coordination &amp; engineering documentation</td><td class="cat">Project Mgmt</td></tr>
+      <tr><td class="no">11</td><td>Microsoft Excel &amp; technical reporting</td><td class="cat">Office</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="dim-divider"><div class="tick"></div><div class="rule"></div><div class="label">§ 06 — Education</div><div class="rule"></div><div class="tick"></div></div>
+
+<section id="education" class="grid-bg">
+  <div class="section-head reveal">
+    <div class="num">§ 06</div>
+    <h2>Education &amp; Certifications</h2>
+  </div>
+  <div class="card reveal">
+    <div class="edu-item">
+      <div><h3>BS, Mechanical Engineering</h3><div class="org">HITEC University, Taxila Cantt · Electives: Industrial Engineering (ME-412), Renewable Energy Resources (ME-416)</div></div>
+      <div class="date">COMPLETED JUL 2026</div>
+    </div>
+    <div class="edu-item">
+      <div><h3>Diploma of Associate Engineering — Automotive Engineering</h3><div class="org">Construction Technology Training Institute (CTTI), Islamabad</div></div>
+      <div class="date">JUN 2021</div>
+    </div>
+    <div class="tag-row">
+      <span class="tag">Google Project Management</span>
+      <span class="tag">Excel Skills for Business: Essentials</span>
+      <span class="tag">Digital Manufacturing &amp; Design Technology (Coursera)</span>
+      <span class="tag">Internship Cert. — PAC Kamra</span>
+      <span class="tag">Internship Cert. — Pak Suzuki</span>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="footer-inner">
+    <div>
+      <h2 style="color:#F5F9FC; font-size:22px;">Let's build something.</h2>
+      <p class="footer-mono" style="margin-top:8px;">Open to Mechanical Engineer roles and MS opportunities.</p>
+    </div>
+    <div>
+      <div class="footer-mono">EMAIL</div>
+      <div style="margin-bottom:14px;"><a href="mailto:mz5019120@gmail.com">mz5019120@gmail.com</a></div>
+      <div class="footer-mono">PHONE</div>
+      <div style="margin-bottom:14px;">+92 313 4551015</div>
+      <div class="footer-mono">LINKEDIN</div>
+      <div><a href="https://linkedin.com/in/muhammad-zeeshan-351652233" target="_blank" rel="noopener">linkedin.com/in/muhammad-zeeshan-351652233</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---------- data ----------
+const projects = [
+  {rev:"R01", sem:1, title:"Machine Shop Practice", course:"Workshop Practice", bullets:["Operated lathe, shaper, drill press, grinders, and bench vises for foundational machining exercises."]},
+  {rev:"R02", sem:1, title:"Welding Lab Practice", course:"Workshop Practice", bullets:["Practiced arc welding, gas welding, and spot welding techniques."]},
+  {rev:"R03", sem:2, title:"Howe Bridge Truss Model", course:"Engineering Statics", bullets:["Built a Howe bridge truss model from ice-cream sticks and performed force-distribution calculations across truss members."]},
+  {rev:"R04", sem:2, title:"Rain Water Detection System", course:"Fundamentals of Electrical Engineering Lab", bullets:["Designed and built a rain water detection system as a lab project."]},
+  {rev:"R05", sem:3, title:"Inclined Conveyor — Kinetics of Particles Study", course:"Engineering Dynamics", bullets:["Designed a stationary wooden conveyor to move boxes from a higher to lower position, testing three inclined angles between 60° and 75°, analyzed using Kinetics of Particles: Energy and Momentum Methods."]},
+  {rev:"R06", sem:3, title:"Worm and Worm Wheel Apparatus", course:"Engineering Mechanics Lab", bullets:["Built a worm and worm wheel apparatus and determined mechanical advantage and velocity ratio by applying load and effort."]},
+  {rev:"R07", sem:3, title:"Manufacturing Study — Honda Civic 1.8L Cylinder Block", course:"Manufacturing Process (End-Term Project)", bullets:["Conducted a detailed study of the manufacturing process for a Honda Civic 1.8L 4-cylinder engine cylinder block: material selection, sand casting, machining, heat treatment, quality inspection, defects, and process optimization."]},
+  {rev:"R08", sem:4, title:"Smart Irrigation System", course:"Analog and Digital Systems Lab", bullets:["Built an Arduino Uno-based smart irrigation system using a soil moisture sensor and a DHT11/DHT22 sensor, with a water pump and 16x2 LCD display for real-time monitoring."]},
+  {rev:"R09", sem:4, title:"Stress Analysis of Thin and Thick Cylinders", course:"Mechanics of Materials Lab (Open-Ended)", bullets:["Used strain gauges to measure hoop, longitudinal, and radial stresses under internal pressure, compared against theoretical calculations."]},
+  {rev:"R10", sem:4, title:"Joule Heating in an Electric Wire Rod", course:"Thermodynamics Lab", bullets:["Carried out an experimental investigation of Joule heating in an electric wire rod."]},
+  {rev:"R11", sem:4, title:"Pressure Vessel Design & Stress Analysis", course:"Mechanics of Materials-II", bullets:["Modeled a pressure vessel in SolidWorks and performed a full stress analysis on the design as the course's end-term project."]},
+  {rev:"R12", sem:5, title:"SolidWorks Assembly & ANSYS Analysis Project", course:"Design of Machine Elements Lab", bullets:["Created part files and a simple assembly in SolidWorks, produced 2D drawings from the model, and performed analysis in ANSYS Workbench."]},
+  {rev:"R13", sem:5, title:"Free and Forced Convection Study", course:"Heat and Mass Transfer", bullets:["Studied free and forced convection on fins, a flat plate, and a pipe bundle using a WL352 GUNT Hamburg unit, calculating power, Reynolds numbers, and efficiencies."]},
+  {rev:"R14", sem:5, title:"Orifice Plate Flow Measurement System", course:"Fluid Mechanics Lab", bullets:["Designed and built an orifice plate flow measurement system, applying Bernoulli's and continuity equations to compare theoretical and experimental flow rates."]},
+  {rev:"R15", sem:5, title:"GUI-Based MATLAB Numerical Methods App", course:"Numerical Methods", bullets:["Built a MATLAB GUI application that takes user inputs and performs calculations for multiple numerical methods studied in the course."]},
+  {rev:"R16", sem:5, title:"Mechanism Model — Degrees of Freedom", course:"Theory of Machines", bullets:["Completed an end-term project analyzing a mechanism model in terms of its degrees of freedom."]},
+  {rev:"R17", sem:6, title:"Radiation Heat Transfer — Effect of Geometry", course:"Heat and Mass Transfer Lab", bullets:["Analyzed radiation heat transfer between flat plate, sphere, and cylinder geometries using view (shape) factor calculations."]},
+  {rev:"R18", sem:6, title:"Whitworth Quick-Return Mechanism Analysis", course:"Theory of Machines Lab", bullets:["Investigated the effect of connecting rod length on forward/return strokes; kinematic analysis of slider position, velocity, acceleration, and quick-return ratio using MATLAB."]},
+  {rev:"R19", sem:7, title:"IC Engine Teardown and Rebuild", course:"IC Engines Lab", bullets:["Fully disassembled a 3-cylinder internal combustion engine and reassembled it, studying the function of each component."]},
+  {rev:"R20", sem:7, title:"Helical Gear and Power Hacksaw Study", course:"Design of Machine Elements-II", bullets:["Recorded helical gear tooth counts and RPM via tachometer on a power hacksaw and performed the related design calculations."]},
+  {rev:"R21", sem:7, title:"Instrumentation & Control Systems Lab Project", course:"Instrumentation and Control Systems", bullets:["Completed an end-of-term lab project applying instrumentation and control system principles."]},
+  {rev:"R22", sem:7, title:"Block Diagram Reduction & System Performance", course:"Control Systems (CEP)", bullets:["Performed block diagram reduction and transfer function analysis for feedback control systems, and evaluated overall system performance."]},
+  {rev:"R23", sem:7, title:"CNC Programming and SolidWorks Modeling", course:"CAD/CAM Lab", bullets:["Wrote and executed CNC programs for milling and lathe machines to manufacture simple parts.","Designed 3D mechanical parts and assemblies in SolidWorks and prepared detailed 2D drawings."]},
+  {rev:"R24", sem:8, title:"15 kWp Hybrid Grid-Tied Solar PV System Design", course:"ME-416 Renewable Energy Resources (CEP)", bullets:["Sized and designed a 15 kWp hybrid grid-tied solar PV system for a Taxila Cantt site, applying PV sizing methodology from coursework.","Prepared a 14-slide technical presentation with supporting script for project defense."]},
+  {rev:"R25", sem:8, title:"Thread-Making Process Study, Taxila Cotton Mills Ltd.", course:"ME-412 Industrial Engineering (CEP)", bullets:["Analyzed the thread-making process at a working cotton mill, applying work measurement and line balancing."]},
+  {rev:"R26", sem:8, title:"HSE Improvement Plan for a Manufacturing Facility", course:"Health, Safety & Environment (PBL)", bullets:["Performed hazard identification and 5-Why root cause analysis, then built a risk matrix to assess hazards.","Proposed engineering and administrative controls with an implementation plan built around measurable KPIs."]},
+  {rev:"R27", sem:8, title:"Business Plan & Pitch Presentation", course:"Engineering Management & Entrepreneurship", bullets:["Developed a business plan for a startup concept, including market research, SWOT analysis, and financial planning; delivered a team pitch."]},
+  {rev:"R28", sem:8, title:"Project Scheduling Using Microsoft Project", course:"Engineering Management & Entrepreneurship", bullets:["Planned and scheduled a project in Microsoft Project: WBS, Gantt charts, task dependencies, milestones, and resource allocation."]},
+];
+
+// ---------- render revision table ----------
+const tableEl = document.getElementById('rev-table');
+const chipsEl = document.getElementById('chips');
+const countEl = document.getElementById('rev-count');
+let activeFilter = 'ALL';
+
+function renderChips(){
+  const sems = ['ALL',1,2,3,4,5,6,7,8];
+  chipsEl.innerHTML = sems.map(s => `<div class="chip ${activeFilter===s?'active':''}" data-f="${s}">${s==='ALL'?'All Semesters':'Sem '+s}</div>`).join('');
+  chipsEl.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      activeFilter = c.dataset.f === 'ALL' ? 'ALL' : Number(c.dataset.f);
+      renderChips();
+      renderTable();
+    });
+  });
+}
+
+function renderTable(){
+  const filtered = projects.filter(p => activeFilter==='ALL' || p.sem===activeFilter);
+  countEl.textContent = `SHOWING ${filtered.length} OF ${projects.length} LOGGED ENTRIES`;
+  tableEl.innerHTML = filtered.map((p,i) => `
+    <div class="rev-row" data-idx="${i}">
+      <div class="rev-row-head">
+        <div class="rev-id">${p.rev}</div>
+        <div>
+          <div class="rev-title">${p.title}</div>
+          <div class="rev-course">${p.course}</div>
+        </div>
+        <div class="rev-sem">SEM ${p.sem}</div>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="rev-detail">
+        <div class="rev-detail-inner">
+          <ul>${p.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  tableEl.querySelectorAll('.rev-row-head').forEach(head=>{
+    head.addEventListener('click', ()=>{
+      head.closest('.rev-row').classList.toggle('open');
+    });
+  });
+}
+
+renderChips();
+renderTable();
+
+// ---------- scroll reveal ----------
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// ---------- nav active state on scroll ----------
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = [...navLinks].map(a=>document.querySelector(a.getAttribute('href')));
+window.addEventListener('scroll', ()=>{
+  let idx = 0;
+  sections.forEach((s,i)=>{ if(s && s.getBoundingClientRect().top < 120) idx = i; });
+  navLinks.forEach((a,i)=> a.classList.toggle('active', i===idx));
+}, {passive:true});
+</script>
+</body>
+</html>
